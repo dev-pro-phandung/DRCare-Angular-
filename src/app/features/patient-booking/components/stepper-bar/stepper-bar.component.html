@@ -1,0 +1,30 @@
+<div class="stepper-wrapper">
+  <div class="stepper-container">
+    @for (s of steps; track s.number; let idx = $index; let last = $last) {
+      <div 
+        class="step-item"
+        [class.active]="state.currentStep() === s.number"
+        [class.completed]="state.currentStep() > s.number"
+        [class.clickable]="canJumpTo(s.number)"
+        (click)="canJumpTo(s.number) && state.goToStep(s.number)">
+        
+        <div class="step-circle">
+          @if (state.currentStep() > s.number) {
+            <span class="check-icon">✓</span>
+          } @else {
+            <span>0{{ s.number }}</span>
+          }
+        </div>
+
+        <div class="step-text">
+          <span class="step-label">{{ s.label }}</span>
+          <span class="step-desc">{{ s.desc }}</span>
+        </div>
+      </div>
+
+      @if (!last) {
+        <div class="step-line" [class.completed]="state.currentStep() > s.number"></div>
+      }
+    }
+  </div>
+</div>

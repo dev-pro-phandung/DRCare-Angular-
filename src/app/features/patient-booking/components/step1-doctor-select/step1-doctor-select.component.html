@@ -1,0 +1,256 @@
+<div class="vnpt-booking-card">
+  <!-- Card Header -->
+  <div class="card-header-row">
+    <div class="header-titles">
+      <h2 class="main-title">Thông tin đặt lịch khám tại cơ sở y tế</h2>
+      <p class="sub-title">Vui lòng điền thông tin chính xác theo giấy tờ tùy thân và thẻ BHYT để được phục vụ tốt nhất.</p>
+    </div>
+    <div class="step-badge">Bước 1/3</div>
+  </div>
+
+  <form (ngSubmit)="submitStep1()" class="vnpt-form">
+    <!-- SECTION 1: THÔNG TIN CÁ NHÂN -->
+    <div class="form-section">
+      <div class="section-title">
+        <span class="bar"></span>
+        <h3>1. Thông tin cá nhân người khám</h3>
+      </div>
+
+      <div class="section-grid-1">
+        <!-- Tên người khám -->
+        <div class="field-col">
+          <label class="field-label">Tên người khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">👤</span>
+            <select class="form-control select-box" [(ngModel)]="selectedProfileId" name="selectedProfileId" (change)="onProfileChange()">
+              @for (prof of patientProfiles; track prof.id) {
+                <option [value]="prof.id">{{ prof.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!-- Đối tượng -->
+        <div class="field-col">
+          <label class="field-label">Đối tượng <span class="req">*</span></label>
+          <div class="target-options">
+            <!-- Option 1: BHYT -->
+            <label class="target-card" [class.selected]="billingTarget === 'BHYT'" (click)="setBillingTarget('BHYT')">
+              <input type="radio" name="billingTarget" [checked]="billingTarget === 'BHYT'" />
+              <div class="card-text">
+                <div class="title"><span class="badge-icon">🛡️</span> BHYT</div>
+                <div class="desc">Đúng tuyến / Thông tuyến</div>
+              </div>
+            </label>
+
+            <!-- Option 2: Viện phí -->
+            <label class="target-card" [class.selected]="billingTarget === 'HOSPITAL_FEE'" (click)="setBillingTarget('HOSPITAL_FEE')">
+              <input type="radio" name="billingTarget" [checked]="billingTarget === 'HOSPITAL_FEE'" />
+              <div class="card-text">
+                <div class="title"><span class="badge-icon">💳</span> Viện phí</div>
+                <div class="desc">Tự chi trả viện phí</div>
+              </div>
+            </label>
+
+            <!-- Option 3: Dịch vụ -->
+            <label class="target-card" [class.selected]="billingTarget === 'SERVICE'" (click)="setBillingTarget('SERVICE')">
+              <input type="radio" name="billingTarget" [checked]="billingTarget === 'SERVICE'" />
+              <div class="card-text">
+                <div class="title"><span class="badge-icon">⚡</span> Dịch vụ</div>
+                <div class="desc">Khám theo yêu cầu</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: THÔNG TIN CSYT & CHUYÊN KHOA -->
+    <div class="form-section">
+      <div class="section-title">
+        <span class="bar"></span>
+        <h3>2. Thông tin cơ sở y tế (CSYT) & Chuyên khoa</h3>
+      </div>
+
+      <!-- Row 1: Tỉnh thành - Cơ sở khám - Dịch vụ khám -->
+      <div class="section-grid-3">
+        <div class="field-col">
+          <label class="field-label">Tỉnh / Thành phố <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">📍</span>
+            <select class="form-control select-box" [(ngModel)]="selectedProvinceId" name="selectedProvinceId" (change)="onProvinceChange()">
+              @for (prov of provinces; track prov.id) {
+                <option [value]="prov.id">{{ prov.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="field-col">
+          <label class="field-label">Cơ sở khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">🏥</span>
+            <select class="form-control select-box" [(ngModel)]="selectedFacilityId" name="selectedFacilityId" (change)="onFacilityChange()">
+              @for (fac of filteredFacilities; track fac.id) {
+                <option [value]="fac.id">{{ fac.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="field-col">
+          <label class="field-label">Dịch vụ khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">📋</span>
+            <select class="form-control select-box" [(ngModel)]="selectedServiceId" name="selectedServiceId">
+              @for (srv of examServices; track srv.id) {
+                <option [value]="srv.id">{{ srv.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Phòng khám - Bác sĩ -->
+      <div class="section-grid-2">
+        <div class="field-col">
+          <label class="field-label">Phòng khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">🏢</span>
+            <select class="form-control select-box" [(ngModel)]="selectedRoomId" name="selectedRoomId">
+              @for (room of filteredRooms; track room.id) {
+                <option [value]="room.id">{{ room.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="field-col">
+          <label class="field-label">Bác sĩ</label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">👨‍⚕️</span>
+            <select class="form-control select-box" [(ngModel)]="selectedDoctorId" name="selectedDoctorId">
+              @for (doc of doctors; track doc.id) {
+                <option [value]="doc.id">{{ doc.title }} {{ doc.name }} ({{ doc.specialtyName }})</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: THỜI GIAN KHÁM & THẺ BHYT -->
+    <div class="form-section">
+      <div class="section-title">
+        <span class="bar"></span>
+        <h3>3. Thời gian khám & Thẻ BHYT</h3>
+      </div>
+
+      <div class="section-grid-3">
+        <div class="field-col">
+          <label class="field-label">Ngày khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">📅</span>
+            <input type="text" class="form-control" [(ngModel)]="examDate" name="examDate" placeholder="10/11/2026" />
+          </div>
+        </div>
+
+        <div class="field-col">
+          <label class="field-label">Giờ khám <span class="req">*</span></label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">🕒</span>
+            <select class="form-control select-box" [(ngModel)]="examTime" name="examTime">
+              @for (t of timeRanges; track t.value) {
+                <option [value]="t.value">{{ t.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="field-col">
+          <label class="field-label">Mã thẻ BHYT (nếu có)</label>
+          <div class="input-with-icon">
+            <span class="prefix-icon">💳</span>
+            <input 
+              type="text" 
+              class="form-control"
+              [(ngModel)]="insuranceCard" 
+              name="insuranceCard"
+              [placeholder]="billingTarget === 'BHYT' ? 'Nhập mã thẻ BHYT 15 số' : 'CHỈ ÁP DỤNG KHI CHỌN BHYT'"
+              [disabled]="billingTarget !== 'BHYT'"
+              [class.disabled-input]="billingTarget !== 'BHYT'" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: TRIỆU CHỨNG & TỆP ĐÍNH KÈM -->
+    <div class="form-section">
+      <div class="section-title">
+        <span class="bar"></span>
+        <h3>4. Triệu chứng & Hồ sơ tài liệu đính kèm</h3>
+      </div>
+
+      <div class="field-col full-col">
+        <label class="field-label">Lý do khám, triệu chứng bệnh lý hoặc ghi chú bổ sung</label>
+        <textarea 
+          class="form-control textarea-box" 
+          rows="3"
+          placeholder="Mô tả cụ thể triệu chứng của bạn (ví dụ: đau đầu, sốt 2 ngày nay, mệt mỏi, tái khám theo hẹn định kỳ...)"
+          [(ngModel)]="symptoms"
+          name="symptoms"></textarea>
+      </div>
+
+      <!-- File Attachment Row -->
+      <div class="field-col full-col attachment-area">
+        <div class="attachment-label-row">
+          <label class="field-label">Hình ảnh / Tài liệu y tế (kết quả xét nghiệm, đơn thuốc cũ, BHYT) (tối đa 5 tệp)</label>
+          <span class="count-txt">Đã đính kèm: {{ attachedFiles.length }}/5 tệp</span>
+        </div>
+
+        <!-- Attachment Box & Notice -->
+        <div class="attachment-wrapper">
+          <div class="upload-dropzone" (click)="triggerFileUpload()">
+            <span class="cloud-icon">☁️</span>
+            <div class="upload-text">
+              <strong>Thêm tệp tin ({{ attachedFiles.length }}/5)</strong>
+              <p>PNG, JPG, PDF tối đa 5MB • Tối đa 5 tệp</p>
+            </div>
+          </div>
+
+          <div class="notice-callout">
+            <div class="notice-header">
+              <span class="info-icon">ℹ️</span>
+              <strong>Lưu ý đính kèm tài liệu y tế:</strong>
+            </div>
+            <ul>
+              <li>Hỗ trợ tải lên ảnh (PNG, JPG) hoặc tài liệu PDF hồ sơ bệnh án, xét nghiệm, đơn thuốc cũ rõ nét.</li>
+              <li>Việc cung cấp hồ sơ bệnh án cũ giúp bác sĩ chẩn đoán chính xác và tiết kiệm thời gian tái xét nghiệm.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- List of attached files -->
+        @if (attachedFiles.length > 0) {
+          <div class="attached-files-list">
+            @for (f of attachedFiles; track f.id; let idx = $index) {
+              <div class="file-chip">
+                <span class="file-icon">📄</span>
+                <span class="file-name">{{ f.name }}</span>
+                <span class="file-size">({{ f.sizeStr }})</span>
+                <button type="button" class="remove-btn" (click)="removeFile(idx)">✕</button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- SUBMIT BUTTON -->
+    <div class="form-submit-row">
+      <button type="submit" class="btn btn-primary btn-submit">
+        Tiếp tục xác nhận ➔
+      </button>
+    </div>
+  </form>
+</div>

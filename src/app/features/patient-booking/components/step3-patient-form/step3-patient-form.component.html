@@ -1,0 +1,100 @@
+<div class="vnpt-booking-card ticket-view">
+  <div class="success-banner">
+    <div class="check-icon">✓</div>
+    <h2>ĐẶT LỊCH KHÁM THÀNH CÔNG!</h2>
+    <p>Hệ thống CSYT đã tiếp nhận thông tin đăng ký khám của bạn</p>
+  </div>
+
+  @if (appointment; as apt) {
+    <div class="ticket-card">
+      <div class="ticket-top">
+        <div class="brand">
+          <span class="icon">🩺</span>
+          <div>
+            <h3>PHIẾU KHÁM BỆNH ĐIỆN TỬ</h3>
+            <p>VNPT DrCare - Cổng Y Tế Thông Minh</p>
+          </div>
+        </div>
+        <div class="code-box">
+          <span class="lbl">MÃ LỊCH HẸN</span>
+          <span class="code">{{ apt.appointmentCode }}</span>
+        </div>
+      </div>
+
+      <div class="ticket-body">
+        <div class="ticket-grid">
+          <div class="t-item">
+            <span class="lbl">Bệnh nhân:</span>
+            <strong>{{ apt.patient.fullName }}</strong>
+            <p class="sub">SĐT: {{ apt.patient.phone }} | CCCD: {{ apt.patient.cccd }}</p>
+          </div>
+
+          <div class="t-item">
+            <span class="lbl">Cơ sở khám (CSYT):</span>
+            <strong class="text-primary">{{ apt.hospital }}</strong>
+            <p class="sub">{{ apt.hospitalAddress }}</p>
+          </div>
+
+          <div class="t-item">
+            <span class="lbl">Thời gian khám:</span>
+            <strong class="text-primary">🕒 {{ apt.timeRange }}</strong>
+            <p class="sub">Ngày: {{ apt.date }}</p>
+          </div>
+
+          <div class="t-item">
+            <span class="lbl">Phòng khám & Bác sĩ:</span>
+            <strong>{{ apt.clinicRoomName }}</strong>
+            <p class="sub">{{ apt.doctorTitle }} {{ apt.doctorName }} ({{ apt.specialtyName }})</p>
+          </div>
+
+          <div class="t-item">
+            <span class="lbl">Đối tượng thanh toán:</span>
+            <span class="badge-target">{{ apt.billingTarget }}</span>
+            @if (apt.patient.insuranceCard) {
+              <p class="sub">Mã thẻ BHYT: {{ apt.patient.insuranceCard }}</p>
+            }
+          </div>
+
+          <div class="t-item">
+            <span class="lbl">Viện phí dự kiến:</span>
+            <strong class="fee-text">{{ apt.consultationFee | vndCurrency }}</strong>
+            <p class="sub">Thanh toán tại quầy CSYT</p>
+          </div>
+        </div>
+
+        <div class="qr-section">
+          <div class="qr-mock">
+            <div class="qr-box">
+              <div class="corner tl"></div>
+              <div class="corner tr"></div>
+              <div class="corner bl"></div>
+              <span class="qr-txt">VNPT DrCare<br/>{{ apt.appointmentCode }}</span>
+            </div>
+            <span class="qr-caption">Quét mã QR tại Kiosk Check-in vào phòng khám</span>
+          </div>
+
+          <div class="instructions">
+            <h4>Hướng dẫn người bệnh khi đến khám:</h4>
+            <ul>
+              <li>Vui lòng có mặt tại CSYT trước giờ hẹn <strong>15 phút</strong>.</li>
+              <li>Xuất trình mã phiếu hẹn hoặc mã QR này kèm theo CCCD/BHYT gốc tại quầy tiếp đón.</li>
+              <li>Để hủy hoặc dời lịch khám, bạn có thể thực hiện tại mục <em>Lịch hẹn khám</em> trước ít nhất 2 giờ.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-footer">
+        <button type="button" class="btn btn-secondary btn-lg" (click)="printTicket()">
+          🖨️ In Phiếu Khám
+        </button>
+        <button type="button" class="btn btn-outline btn-lg" (click)="bookNew()">
+          ➕ Đặt Lịch Khám Mới
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" (click)="viewMyAppointments()">
+          📋 Xem Lịch Hẹn Khám ➔
+        </button>
+      </div>
+    </div>
+  }
+</div>

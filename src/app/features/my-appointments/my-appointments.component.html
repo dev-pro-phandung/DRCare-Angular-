@@ -1,0 +1,100 @@
+<div class="my-appointments-page container">
+  <div class="page-header">
+    <div class="header-left">
+      <h1 class="page-title">Lịch Hẹn Của Tôi</h1>
+      <p class="page-subtitle">Quản lý, tra cứu và theo dõi phiếu khám bệnh điện tử trên VNPT DrCare</p>
+    </div>
+
+    <a routerLink="/booking" class="btn btn-primary">
+      <span>➕ Đặt lịch khám mới</span>
+    </a>
+  </div>
+
+  <!-- Search & Tabs Bar -->
+  <div class="control-bar">
+    <div class="tabs-group">
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'ALL'"
+        (click)="setTab('ALL')">
+        Tất cả ({{ appointments.length }})
+      </button>
+
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'UPCOMING'"
+        (click)="setTab('UPCOMING')">
+        Sắp tới ({{ getCountByStatus('UPCOMING') }})
+      </button>
+
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'COMPLETED'"
+        (click)="setTab('COMPLETED')">
+        Đã khám ({{ getCountByStatus('COMPLETED') }})
+      </button>
+
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'CANCELLED'"
+        (click)="setTab('CANCELLED')">
+        Đã hủy ({{ getCountByStatus('CANCELLED') }})
+      </button>
+    </div>
+
+    <div class="search-box">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Tìm theo mã hẹn, bác sĩ, người khám..." 
+        [(ngModel)]="searchTerm"
+        (input)="applyFilter()" />
+    </div>
+  </div>
+
+  <!-- Appointments Content -->
+  @if (loading) {
+    <app-loading-spinner message="Đang tải danh sách lịch khám của bạn..." />
+  } @else {
+    @if (filteredAppointments.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">📋</span>
+        <h3>Không tìm thấy lịch hẹn nào</h3>
+        <p>Bạn chưa có lịch hẹn nào phù hợp với bộ lọc hiện tại.</p>
+        <a routerLink="/booking" class="btn btn-primary">
+          Đặt lịch khám ngay
+        </a>
+      </div>
+    } @else {
+      <div class="appointments-grid">
+        @for (apt of filteredAppointments; track apt.id) {
+          <app-appointment-card 
+            [appointment]="apt"
+            (viewDetails)="openDetail($event)"
+            (cancel)="requestCancel($event)" />
+        }
+      </div>
+    }
+  }
+
+  <!-- Detail Modal -->
+  <app-appointment-detail-modal 
+    [appointment]="selectedAppointment"
+    [isOpen]="isDetailOpen"
+    (close)="closeDetail()"
+    (cancel)="requestCancel($event)" />
+
+  <!-- Cancel Confirmation Dialog -->
+  <app-confirm-dialog 
+    [isOpen]="isCancelDialogOpen"
+    title="Xác nhận hủy lịch hẹn khám"
+    [message]="'Bạn có chắc chắn muốn hủy lịch hẹn mã ' + (targetAppointmentToCancel?.appointmentCode || '') + ' với ' + (targetAppointmentToCancel?.doctorTitle || '') + ' ' + (targetAppointmentToCancel?.doctorName || '') + ' không? Khung giờ này sẽ được giải phóng cho bệnh nhân khác.'"
+    confirmText="Đồng ý hủy lịch"
+    cancelText="Quay lại"
+    (confirm)="onConfirmCancel()"
+    (cancel)="onDismissCancel()" />
+</div>

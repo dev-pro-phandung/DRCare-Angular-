@@ -1,0 +1,208 @@
+<div class="home-page">
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Nền tảng Y tế số Quốc gia VNPT DrCare</span>
+        </div>
+        <h1 class="hero-title">
+          Đặt Lịch Khám Bác Sĩ <br />
+          <span class="text-highlight">Dễ Dàng & Chu Đáo</span>
+        </h1>
+        <p class="hero-desc">
+          Kết nối trực tiếp với hơn 100+ bác sĩ chuyên khoa đầu ngành tại các bệnh viện uy tín. Chủ động chọn ngày, giờ khám, không phải chờ đợi xếp hàng.
+        </p>
+
+        <div class="hero-cta-group">
+          <a routerLink="/booking" class="btn btn-primary btn-lg">
+            <span>📅 Đặt lịch khám ngay</span>
+          </a>
+          <a routerLink="/my-appointments" class="btn btn-secondary btn-lg">
+            <span>📋 Tra cứu lịch hẹn</span>
+          </a>
+        </div>
+
+        <div class="hero-features">
+          <div class="feat-item">
+            <span class="feat-check">✓</span>
+            <span>Chọn khung giờ chính xác</span>
+          </div>
+          <div class="feat-item">
+            <span class="feat-check">✓</span>
+            <span>Phiếu khám QR vào cổng</span>
+          </div>
+          <div class="feat-item">
+            <span class="feat-check">✓</span>
+            <span>Hủy hẹn linh hoạt</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-card">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=80" alt="Doctor Banner" class="visual-img" />
+          <div class="float-badge float-top">
+            <span class="icon">⭐</span>
+            <div>
+              <strong>4.9 / 5.0</strong>
+              <p>Hài lòng chất lượng khám</p>
+            </div>
+          </div>
+          <div class="float-badge float-bottom">
+            <span class="icon">🩺</span>
+            <div>
+              <strong>15.000+</strong>
+              <p>Lượt khám trực tuyến</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Bar -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-num">50+</span>
+          <span class="stat-lbl">Bác sĩ chuyên khoa</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">12+</span>
+          <span class="stat-lbl">Cơ sở y tế & Bệnh viện</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-lbl">Khung giờ hẹn chính xác</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">24/7</span>
+          <span class="stat-lbl">Hỗ trợ y tế toàn diện</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialties Section -->
+  <section class="section specialties-section" id="specialties">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">DANH MỤC Y KHOA</span>
+        <h2 class="section-title">Chuyên Khoa Nổi Bật</h2>
+        <p class="section-subtitle">Lựa chọn chuyên khoa phù hợp với nhu cầu sức khỏe của bạn và gia đình</p>
+      </div>
+
+      @if (loading) {
+        <app-loading-spinner message="Đang tải danh mục chuyên khoa..." />
+      } @else {
+        <div class="specialties-grid">
+          @for (spec of specialties; track spec.id) {
+            <div class="specialty-card" (click)="selectSpecialty(spec.id)">
+              <div class="spec-icon">{{ spec.icon }}</div>
+              <h3 class="spec-name">{{ spec.name }}</h3>
+              <p class="spec-desc">{{ spec.description }}</p>
+              <div class="spec-footer">
+                <span class="doc-count">{{ spec.doctorCount }} bác sĩ</span>
+                <span class="arrow-btn">➔</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Featured Doctors Section -->
+  <section class="section doctors-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">ĐỘI NGŨ CHUYÊN GIA</span>
+        <h2 class="section-title">Bác Sĩ Tiêu Biểu</h2>
+        <p class="section-subtitle">Các chuyên gia giàu kinh nghiệm tại các bệnh viện tuyến đầu</p>
+      </div>
+
+      @if (loading) {
+        <app-loading-spinner message="Đang tải danh sách bác sĩ..." />
+      } @else {
+        <div class="doctors-grid">
+          @for (doc of featuredDoctors; track doc.id) {
+            <div class="doctor-card">
+              <div class="doc-header">
+                <img [src]="doc.avatar" [alt]="doc.name" class="doc-avatar" />
+                <div class="doc-rating">
+                  <span>★</span> {{ doc.rating }} ({{ doc.reviewCount }})
+                </div>
+              </div>
+              <div class="doc-body">
+                <span class="doc-spec-badge">{{ doc.specialtyName }}</span>
+                <h3 class="doc-name">{{ doc.title }} {{ doc.name }}</h3>
+                <p class="doc-hospital">🏥 {{ doc.hospital }}</p>
+                <p class="doc-exp">⏳ {{ doc.experienceYears }} năm kinh nghiệm</p>
+                <p class="doc-bio">{{ doc.bio }}</p>
+              </div>
+              <div class="doc-footer">
+                <div class="doc-fee">
+                  <span class="fee-lbl">Giá khám niêm yết:</span>
+                  <span class="fee-val">{{ doc.consultationFee | vndCurrency }}</span>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" (click)="selectDoctor(doc.id)">
+                  Đặt khám ngay
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="view-all-wrapper">
+          <a routerLink="/booking" class="btn btn-outline btn-lg">
+            Xem tất cả bác sĩ & đặt lịch ➔
+          </a>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section steps-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">QUY TRÌNH TIỆN LỢI</span>
+        <h2 class="section-title">4 Bước Đặt Khám Đơn Giản</h2>
+        <p class="section-subtitle">Chỉ mất 2 phút để hoàn tất phiếu đặt hẹn khám bệnh</p>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">👨‍⚕️</div>
+          <h4>Chọn Chuyên Khoa & Bác Sĩ</h4>
+          <p>Tìm kiếm theo chuyên khoa, học vị hoặc tên bác sĩ mong muốn.</p>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🕒</div>
+          <h4>Chọn Ngày & Khung Giờ</h4>
+          <p>Lựa chọn ca sáng hoặc ca chiều theo lịch trống thời gian thực.</p>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">📝</div>
+          <h4>Nhập Thông Tin Bệnh Nhân</h4>
+          <p>Điền họ tên, CCCD/BHYT và tóm tắt triệu chứng cần khám.</p>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-num">04</div>
+          <div class="step-icon">🎫</div>
+          <h4>Nhận Phiếu Khám & Mã QR</h4>
+          <p>Nhận ngay mã đặt hẹn điện tử, đến viện vào thẳng phòng khám.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

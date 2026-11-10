@@ -1,0 +1,216 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+
+    .logo-icon {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(14, 165, 233, 0.15);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+
+      .logo-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #0b57d0; // VNPT Blue
+        letter-spacing: -0.5px;
+      }
+
+      .logo-subtitle {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #475569;
+      transition: all 0.2s ease;
+
+      .icon {
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        background-color: #f1f5f9;
+        color: #0b57d0;
+      }
+
+      &.active {
+        background-color: #eff6ff;
+        color: #0b57d0;
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+
+    .hotline-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+
+      .phone-icon {
+        font-size: 1rem;
+      }
+
+      .hotline-info {
+        display: flex;
+        flex-direction: column;
+
+        .label {
+          font-size: 0.65rem;
+          color: #94a3b8;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+
+        .number {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #ef4444;
+        }
+      }
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0b57d0, #3b82f6);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .user-meta {
+        display: flex;
+        flex-direction: column;
+
+        .user-name {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #1e293b;
+        }
+
+        .user-role {
+          font-size: 0.7rem;
+          color: #10b981;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+
+      span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: #334155;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .mobile-dropdown {
+    display: none;
+    flex-direction: column;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffffff;
+    border-top: 1px solid #f1f5f9;
+
+    .mobile-nav-item {
+      padding: 0.75rem 0;
+      text-decoration: none;
+      color: #334155;
+      font-weight: 600;
+      border-bottom: 1px solid #f8fafc;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .nav-menu {
+      display: none;
+    }
+
+    .header-actions {
+      .hotline-badge {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+    }
+
+    .mobile-dropdown {
+      display: flex;
+    }
+  }
+}

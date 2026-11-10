@@ -1,0 +1,170 @@
+.appointment-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all 0.25s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
+  }
+
+  &.status-upcoming {
+    border-top: 4px solid var(--primary);
+  }
+
+  &.status-completed {
+    border-top: 4px solid var(--success);
+  }
+
+  &.status-cancelled {
+    border-top: 4px solid var(--danger);
+    opacity: 0.85;
+  }
+
+  .card-header {
+    padding: 1rem 1.5rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .code-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .code-lbl {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 700;
+      }
+
+      .code-val {
+        font-size: 1rem;
+        color: #0f172a;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+
+      &.badge-upcoming {
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+
+      &.badge-completed {
+        background: var(--success-light);
+        color: var(--success);
+      }
+
+      &.badge-cancelled {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .doctor-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+
+      .avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+      }
+
+      .meta {
+        .spec {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--secondary);
+          background: var(--secondary-light);
+          padding: 0.15rem 0.5rem;
+          border-radius: 999px;
+        }
+
+        .name {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: #0f172a;
+          margin: 0.25rem 0 0.15rem;
+        }
+
+        .hospital {
+          font-size: 0.8rem;
+          color: #64748b;
+          margin: 0;
+        }
+      }
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem 1.25rem;
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+
+      .info-item {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+
+        .icon {
+          font-size: 1.2rem;
+        }
+
+        .lbl {
+          font-size: 0.7rem;
+          color: #94a3b8;
+          display: block;
+        }
+
+        strong {
+          font-size: 0.85rem;
+          color: #1e293b;
+        }
+
+        .text-primary {
+          color: var(--primary);
+        }
+      }
+    }
+
+    .cancel-reason-box {
+      margin-top: 1rem;
+      padding: 0.5rem 0.75rem;
+      background: #fef2f2;
+      border-left: 3px solid var(--danger);
+      font-size: 0.8rem;
+      color: #991b1b;
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  .card-footer {
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+}

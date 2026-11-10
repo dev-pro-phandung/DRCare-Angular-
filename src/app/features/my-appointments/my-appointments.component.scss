@@ -1,0 +1,123 @@
+.my-appointments-page {
+  padding: 3rem 1.5rem 4rem;
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .page-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      color: #64748b;
+      margin: 0;
+    }
+  }
+
+  .control-bar {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+
+    .tabs-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+
+      .tab-btn {
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        background: transparent;
+        color: #64748b;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #f1f5f9;
+          color: #1e293b;
+        }
+
+        &.active {
+          background: var(--primary-light);
+          color: var(--primary);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .search-box {
+      min-width: 280px;
+
+      input {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 4rem 1.5rem;
+
+    .empty-icon {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      color: #1e293b;
+      margin: 0 0 0.5rem;
+    }
+
+    p {
+      color: #64748b;
+      margin: 0 0 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .control-bar {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-box {
+        width: 100%;
+      }
+    }
+
+    .appointments-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

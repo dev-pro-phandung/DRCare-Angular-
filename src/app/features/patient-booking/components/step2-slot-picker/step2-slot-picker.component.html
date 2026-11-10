@@ -1,0 +1,139 @@
+<div class="vnpt-booking-card">
+  <div class="card-header-row">
+    <div class="header-titles">
+      <h2 class="main-title">Xác nhận thông tin đặt lịch khám</h2>
+      <p class="sub-title">Vui lòng kiểm tra lại toàn bộ thông tin đăng ký trước khi gửi lên hệ thống CSYT</p>
+    </div>
+    <div class="step-badge">Bước 2/3</div>
+  </div>
+
+  <div class="review-sections">
+    <!-- Block 1: Thông tin người khám -->
+    <div class="review-block">
+      <div class="block-title">
+        <span class="bar"></span>
+        <h4>1. Thông tin người khám & Đối tượng</h4>
+      </div>
+      <div class="review-grid">
+        <div class="r-item">
+          <span class="r-lbl">Họ và tên:</span>
+          <strong class="r-val">{{ data.patientProfile ? data.patientProfile.fullName : 'PHAN TIẾN DŨNG' }}</strong>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Số điện thoại:</span>
+          <strong class="r-val">{{ data.patientProfile?.phone || '0912345678' }}</strong>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Số CCCD:</span>
+          <strong class="r-val">{{ data.patientProfile?.cccd || '001090008899' }}</strong>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Đối tượng thanh toán:</span>
+          <span class="badge-target">{{ targetLabel }}</span>
+        </div>
+        @if (data.billingTarget === 'BHYT' && data.insuranceCard) {
+          <div class="r-item">
+            <span class="r-lbl">Mã thẻ BHYT:</span>
+            <strong class="r-val text-primary">{{ data.insuranceCard }}</strong>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Block 2: Cơ sở y tế & Phòng khám -->
+    <div class="review-block">
+      <div class="block-title">
+        <span class="bar"></span>
+        <h4>2. Cơ sở y tế & Phòng khám</h4>
+      </div>
+      <div class="review-grid">
+        <div class="r-item full-width">
+          <span class="r-lbl">Cơ sở khám:</span>
+          <strong class="r-val text-primary">🏥 {{ data.facility?.name || 'Bệnh viện Đa khoa Bưu Điện (VNPT)' }}</strong>
+          <p class="r-sub">📍 {{ data.facility?.address || 'Số 49 Trần Điền, Định Công, Hoàng Mai, Hà Nội' }}</p>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Dịch vụ khám:</span>
+          <strong class="r-val">{{ data.examService?.name || 'Khám chuyên khoa theo yêu cầu' }}</strong>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Phòng khám:</span>
+          <strong class="r-val">{{ data.clinicRoom?.name || 'Phòng 102 - Khám Nội tổng hợp' }}</strong>
+        </div>
+        @if (data.doctor) {
+          <div class="r-item full-width">
+            <span class="r-lbl">Bác sĩ phụ trách:</span>
+            <strong class="r-val">👨‍⚕️ {{ data.doctor.title }} {{ data.doctor.name }} ({{ data.doctor.specialtyName }})</strong>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Block 3: Thời gian khám -->
+    <div class="review-block">
+      <div class="block-title">
+        <span class="bar"></span>
+        <h4>3. Thời gian khám bệnh</h4>
+      </div>
+      <div class="review-grid">
+        <div class="r-item">
+          <span class="r-lbl">Ngày khám:</span>
+          <strong class="r-val">📅 {{ data.examDate }}</strong>
+        </div>
+        <div class="r-item">
+          <span class="r-lbl">Khung giờ khám:</span>
+          <strong class="r-val text-primary">🕒 {{ data.examTime }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block 4: Triệu chứng & Tệp -->
+    <div class="review-block">
+      <div class="block-title">
+        <span class="bar"></span>
+        <h4>4. Lý do khám & Tài liệu đính kèm</h4>
+      </div>
+      <div class="r-symptoms">
+        <span class="r-lbl">Triệu chứng / Ghi chú:</span>
+        <p>{{ data.symptoms || 'Không có ghi chú thêm' }}</p>
+      </div>
+
+      @if (data.attachedFiles && data.attachedFiles.length > 0) {
+        <div class="r-files">
+          <span class="r-lbl">Tệp đính kèm ({{ data.attachedFiles.length }} tệp):</span>
+          <div class="files-tags">
+            @for (f of data.attachedFiles; track f.id) {
+              <span class="f-tag">📄 {{ f.name }} ({{ f.sizeStr }})</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Bảng dự kiến viện phí -->
+    <div class="fee-summary-card">
+      <div class="fee-title-row">
+        <span>Chi phí dự kiến tạm tính:</span>
+        <span class="total-price">{{ feeAmount | vndCurrency }}</span>
+      </div>
+      <p class="fee-note">
+        * Bệnh nhân thanh toán trực tiếp tại cơ sở y tế khi đến làm thủ tục tiếp đón. Miễn phí đặt lịch trên cổng VNPT DrCare.
+      </p>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="confirm-actions-row">
+    <button type="button" class="btn btn-secondary btn-lg" (click)="goBack()">
+      ← Quay lại chỉnh sửa
+    </button>
+
+    @if (isSubmitting) {
+      <app-loading-spinner message="Đang kết nối cổng CSYT và sinh phiếu khám..." [inline]="true" />
+    } @else {
+      <button type="button" class="btn btn-primary btn-lg btn-confirm" (click)="confirmBooking()">
+        ✓ Xác Nhận Đặt Khám ➔
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<header class="app-header">
+  <div class="header-container">
+    <!-- Brand Logo -->
+    <a routerLink="/" class="brand-logo">
+      <div class="logo-icon">🩺</div>
+      <div class="logo-text">
+        <span class="logo-title">DrCare</span>
+        <span class="logo-subtitle">Hệ sinh thái Y tế VNPT</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+        <span class="icon">🏠</span>
+        <span>Trang chủ</span>
+      </a>
+      <a routerLink="/booking" routerLinkActive="active" class="nav-item">
+        <span class="icon">📅</span>
+        <span>Đặt lịch khám</span>
+      </a>
+      <a routerLink="/my-appointments" routerLinkActive="active" class="nav-item">
+        <span class="icon">📋</span>
+        <span>Lịch hẹn của tôi</span>
+      </a>
+    </nav>
+
+    <!-- User & Hotline -->
+    <div class="header-actions">
+      <div class="hotline-badge">
+        <span class="phone-icon">📞</span>
+        <div class="hotline-info">
+          <span class="label">Tổng đài hỗ trợ</span>
+          <span class="number">1900 1234</span>
+        </div>
+      </div>
+
+      <div class="user-profile">
+        <div class="avatar">AN</div>
+        <div class="user-meta">
+          <span class="user-name">{{ currentUser().fullName }}</span>
+          <span class="user-role">Bệnh nhân</span>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  @if (mobileMenuOpen) {
+    <div class="mobile-dropdown">
+      <a routerLink="/" (click)="mobileMenuOpen = false" class="mobile-nav-item">Trang chủ</a>
+      <a routerLink="/booking" (click)="mobileMenuOpen = false" class="mobile-nav-item">Đặt lịch khám</a>
+      <a routerLink="/my-appointments" (click)="mobileMenuOpen = false" class="mobile-nav-item">Lịch hẹn của tôi</a>
+    </div>
+  }
+</header>

@@ -1,0 +1,85 @@
+<div class="appointment-card" [class]="'status-' + appointment.status.toLowerCase()">
+  <div class="card-header">
+    <div class="code-wrap">
+      <span class="code-lbl">MÃ HẸN:</span>
+      <strong class="code-val">{{ appointment.appointmentCode }}</strong>
+    </div>
+
+    <div class="status-badge" [class]="'badge-' + appointment.status.toLowerCase()">
+      @switch (appointment.status) {
+        @case ('UPCOMING') {
+          <span>⏱️ Sắp tới</span>
+        }
+        @case ('COMPLETED') {
+          <span>✓ Đã khám</span>
+        }
+        @case ('CANCELLED') {
+          <span>✕ Đã hủy</span>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="doctor-row">
+      <img [src]="appointment.doctorAvatar" [alt]="appointment.doctorName" class="avatar" />
+      <div class="meta">
+        <span class="spec">{{ appointment.specialtyName }}</span>
+        <h3 class="name">{{ appointment.doctorTitle }} {{ appointment.doctorName }}</h3>
+        <p class="hospital">🏥 {{ appointment.hospital }}</p>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="icon">📅</span>
+        <div>
+          <span class="lbl">Ngày khám:</span>
+          <strong>{{ appointment.date }}</strong>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="icon">🕒</span>
+        <div>
+          <span class="lbl">Khung giờ:</span>
+          <strong class="text-primary">{{ appointment.timeRange }}</strong>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="icon">👤</span>
+        <div>
+          <span class="lbl">Người khám:</span>
+          <strong>{{ appointment.patient.fullName }}</strong>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="icon">💳</span>
+        <div>
+          <span class="lbl">Chi phí:</span>
+          <strong>{{ appointment.consultationFee | vndCurrency }}</strong>
+        </div>
+      </div>
+    </div>
+
+    @if (appointment.status === 'CANCELLED' && appointment.cancelReason) {
+      <div class="cancel-reason-box">
+        <span>Lý do hủy: {{ appointment.cancelReason }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="card-footer">
+    <button type="button" class="btn btn-outline btn-sm" (click)="onView()">
+      🔍 Xem Chi Tiết & Mã QR
+    </button>
+
+    @if (appointment.status === 'UPCOMING') {
+      <button type="button" class="btn btn-danger btn-sm" (click)="onCancel()">
+        Hủy Lịch Hẹn
+      </button>
+    }
+  </div>
+</div>

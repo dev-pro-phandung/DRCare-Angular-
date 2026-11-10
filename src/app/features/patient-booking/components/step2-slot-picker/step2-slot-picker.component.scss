@@ -1,0 +1,207 @@
+.vnpt-booking-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  padding: 2.5rem 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+
+    .header-titles {
+      .main-title {
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 0.4rem;
+      }
+      .sub-title {
+        font-size: 0.95rem;
+        color: #64748b;
+        margin: 0;
+      }
+    }
+
+    .step-badge {
+      background: #eff6ff;
+      color: #0b57d0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+    }
+  }
+
+  .review-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .review-block {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+
+      .block-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        .bar {
+          width: 4px;
+          height: 16px;
+          background: #0b57d0;
+          border-radius: 2px;
+        }
+
+        h4 {
+          margin: 0;
+          font-size: 1rem;
+          font-weight: 800;
+          color: #1e293b;
+        }
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem 1.5rem;
+
+        .r-item {
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+
+          .r-lbl {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.2rem;
+          }
+
+          .r-val {
+            font-size: 0.95rem;
+            color: #0f172a;
+
+            &.text-primary {
+              color: #0b57d0;
+            }
+          }
+
+          .r-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 0.2rem 0 0;
+          }
+
+          .badge-target {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            display: inline-block;
+          }
+        }
+      }
+
+      .r-symptoms, .r-files {
+        margin-top: 0.5rem;
+        .r-lbl {
+          font-size: 0.75rem;
+          color: #94a3b8;
+          font-weight: 600;
+          display: block;
+        }
+        p {
+          font-size: 0.9rem;
+          color: #334155;
+          margin: 0.25rem 0 0;
+        }
+      }
+
+      .files-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.4rem;
+
+        .f-tag {
+          font-size: 0.8rem;
+          background: #ffffff;
+          border: 1px solid #cbd5e1;
+          padding: 0.25rem 0.6rem;
+          border-radius: 6px;
+        }
+      }
+    }
+
+    .fee-summary-card {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+
+      .fee-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #1e3a8a;
+        }
+
+        .total-price {
+          font-size: 1.5rem;
+          font-weight: 900;
+          color: #0b57d0;
+        }
+      }
+
+      .fee-note {
+        font-size: 0.8rem;
+        color: #475569;
+        margin: 0.5rem 0 0;
+      }
+    }
+  }
+
+  .confirm-actions-row {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.5rem;
+
+    .btn-confirm {
+      min-width: 240px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    .review-sections .review-block .review-grid {
+      grid-template-columns: 1fr;
+    }
+    .confirm-actions-row {
+      flex-direction: column-reverse;
+      gap: 1rem;
+      .btn { width: 100%; }
+    }
+  }
+}

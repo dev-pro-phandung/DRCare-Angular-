@@ -1,0 +1,71 @@
+<div class="vnpt-drcare-page">
+  <!-- Top Navigation Sub-Tabs matching VNPT DrCare header -->
+  <div class="sub-nav-wrapper">
+    <div class="sub-nav-container">
+      <button 
+        type="button" 
+        class="sub-tab" 
+        [class.active]="activeSubTab === 'CSYT'"
+        (click)="switchSubTab('CSYT')">
+        <span class="tab-icon">📅</span>
+        <span>Đặt lịch khám tại CSYT</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="sub-tab" 
+        [class.active]="activeSubTab === 'REMOTE'"
+        (click)="switchSubTab('REMOTE')">
+        <span class="tab-icon">🖥️</span>
+        <span>Đặt lịch tư vấn từ xa</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="sub-tab" 
+        [class.active]="activeSubTab === 'HISTORY'"
+        (click)="switchSubTab('HISTORY')">
+        <span class="tab-icon">📋</span>
+        <span>Lịch sử khám</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="sub-tab" 
+        [class.active]="activeSubTab === 'APPOINTMENTS'"
+        (click)="switchSubTab('APPOINTMENTS')">
+        <span class="tab-icon">🕒</span>
+        <span>Lịch hẹn khám</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="sub-tab" 
+        [class.active]="activeSubTab === 'PROFILE'"
+        (click)="switchSubTab('PROFILE')">
+        <span class="tab-icon">👤</span>
+        <span>Hồ sơ</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="page-content-wrap container">
+    <!-- Stepper Bar (3 bước: 1. Nhập thông tin, 2. Xác nhận, 3. Hoàn thành) -->
+    <app-stepper-bar />
+
+    <!-- Dynamic 3-Step Views -->
+    <div class="step-view">
+      @switch (state.currentStep()) {
+        @case (1) {
+          <app-step1-doctor-select />
+        }
+        @case (2) {
+          <app-step2-slot-picker />
+        }
+        @case (3) {
+          <app-step3-patient-form />
+        }
+      }
+    </div>
+  </div>
+</div>

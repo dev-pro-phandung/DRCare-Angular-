@@ -1,0 +1,132 @@
+@if (isOpen && appointment) {
+  <div class="modal-backdrop" (click)="onClose()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="header-title">
+          <span class="icon">🩺</span>
+          <div>
+            <h3>Chi Tiết Phiếu Hẹn Khám Bệnh</h3>
+            <p>Mã đặt hẹn: <strong>{{ appointment.appointmentCode }}</strong></p>
+          </div>
+        </div>
+        <button type="button" class="close-btn" (click)="onClose()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Status Banner -->
+        <div class="status-banner" [class]="'status-' + appointment.status.toLowerCase()">
+          @switch (appointment.status) {
+            @case ('UPCOMING') {
+              <span>⏱️ Lịch hẹn sắp tới - Vui lòng đến trước 15 phút</span>
+            }
+            @case ('COMPLETED') {
+              <span>✓ Đã hoàn thành khám bệnh</span>
+            }
+            @case ('CANCELLED') {
+              <span>✕ Lịch hẹn đã bị hủy (Lý do: {{ appointment.cancelReason || 'Người dùng yêu cầu' }})</span>
+            }
+          }
+        </div>
+
+        <!-- Doctor & Clinic Block -->
+        <div class="section-box">
+          <h4 class="box-title">BÁC SĨ PHỤ TRÁCH</h4>
+          <div class="doc-block">
+            <img [src]="appointment.doctorAvatar" [alt]="appointment.doctorName" class="avatar" />
+            <div>
+              <span class="spec-tag">{{ appointment.specialtyName }}</span>
+              <h4 class="name">{{ appointment.doctorTitle }} {{ appointment.doctorName }}</h4>
+              <p class="hospital">🏥 {{ appointment.hospital }}</p>
+              <p class="address">📍 {{ appointment.hospitalAddress }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time & Fee Block -->
+        <div class="section-box">
+          <h4 class="box-title">THỜI GIAN & CHI PHÍ</h4>
+          <div class="detail-grid">
+            <div class="d-item">
+              <span class="lbl">Ngày khám:</span>
+              <strong>{{ appointment.date }}</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">Khung giờ:</span>
+              <strong class="text-primary">{{ appointment.timeRange }} ({{ appointment.session === 'MORNING' ? 'Ca Sáng' : 'Ca Chiều' }})</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">Giá khám niêm yết:</span>
+              <strong>{{ appointment.consultationFee | vndCurrency }}</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">Hình thức thanh toán:</span>
+              <span>Tại quầy thu ngân bệnh viện</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient Block -->
+        <div class="section-box">
+          <h4 class="box-title">THÔNG TIN BỆNH NHÂN</h4>
+          <div class="detail-grid">
+            <div class="d-item">
+              <span class="lbl">Họ tên:</span>
+              <strong>{{ appointment.patient.fullName }}</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">Số điện thoại:</span>
+              <strong>{{ appointment.patient.phone }}</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">Ngày sinh:</span>
+              <strong>{{ appointment.patient.dob }}</strong>
+            </div>
+            <div class="d-item">
+              <span class="lbl">CCCD:</span>
+              <strong>{{ appointment.patient.cccd }}</strong>
+            </div>
+          </div>
+          <div class="symptoms">
+            <span class="lbl">Lý do khám:</span>
+            <p>{{ appointment.patient.symptoms }}</p>
+          </div>
+        </div>
+
+        <!-- QR Code Ticket Area -->
+        <div class="qr-ticket-card">
+          <div class="qr-code-box">
+            <div class="mock-qr">
+              <div class="qr-target tl"></div>
+              <div class="qr-target tr"></div>
+              <div class="qr-target bl"></div>
+              <span class="qr-inner-txt">{{ appointment.appointmentCode }}</span>
+            </div>
+            <span class="qr-label">Quét mã tại quầy tiếp đón</span>
+          </div>
+          <div class="qr-instructions">
+            <h5>Hướng dẫn đến khám:</h5>
+            <ol>
+              <li>Đến quầy tiếp đón trước giờ hẹn 15 phút.</li>
+              <li>Mở ứng dụng xuất trình mã QR này cho nhân viên y tế.</li>
+              <li>Nhận số thứ tự vào phòng khám bác sĩ.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="printTicket()">
+          🖨️ In Phiếu Khám
+        </button>
+        @if (appointment.status === 'UPCOMING') {
+          <button type="button" class="btn btn-danger" (click)="onCancelApt()">
+            Hủy Lịch Hẹn
+          </button>
+        }
+        <button type="button" class="btn btn-primary" (click)="onClose()">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+}
